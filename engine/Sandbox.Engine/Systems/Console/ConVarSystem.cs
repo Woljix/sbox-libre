@@ -261,11 +261,11 @@ internal static partial class ConVarSystem
 			return;
 		}
 
-		if ( !allowProtected && command.IsProtected )
-		{
-			Log.Warning( $"Can't run protected command '{command.Name}'" );
-			return;
-		}
+		//if ( !allowProtected && command.IsProtected )
+		//{
+		//	Log.Warning( $"Can't run protected command '{command.Name}'" );
+		//	return;
+		//}
 
 		var hasArguments = parts.Length > 1;
 
