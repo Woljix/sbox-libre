@@ -101,5 +101,3 @@ engine/TestResults/
 /game/tools
 /game/aftermath_dumps
 /game/gamecache
-# Exclude addons as the bootstrapped files were included in the git, should be fine.. right?
-/game/addons
