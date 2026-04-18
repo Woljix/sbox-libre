@@ -2,6 +2,7 @@
 using Sandbox.Audio;
 using Sandbox.Diagnostics;
 using Sandbox.Internal;
+using Sandbox.Modals;
 using Sandbox.UI;
 using Sandbox.Utility;
 using Sandbox.VR;
@@ -392,8 +393,6 @@ internal partial class GameInstanceDll : Engine.IGameInstanceDll
 
 		ResetEnvironment();
 
-		IMenuDll.Current?.OnGameExited();
-
 		Mounting.MountUtility.TickPreviewRenders();
 	}
 
@@ -515,11 +514,21 @@ internal partial class GameInstanceDll : Engine.IGameInstanceDll
 		BasePopup.CloseAll( panelClickedOn as Panel );
 	}
 
-	public void Disconnect()
+	public void Disconnect( string message = null )
 	{
 		// cancel any in-progress load right now instead of waiting for tick
 		CancelLoad();
 		Game.Close();
+
+		if ( !string.IsNullOrEmpty( message ) )
+		{
+			using var scope = GlobalContext.MenuScope();
+			IModalSystem.Current.Notice( "Disconnected", message, "wifi_off" );
+
+			Log.Warning( $"Disconnected: {message.Replace( "\n", "" )}" );
+		}
+
+		LoadingScreen.IsVisible = false;
 	}
 
 	private void CancelLoad()
