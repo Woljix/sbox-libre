@@ -151,7 +151,7 @@ CreateGameModal .footer .button
 	font-size: 16px;
 	background-color: #323b5233;
 	border-radius: 10px;
-	height: 48px;
+	min-height: 48px;
 	padding: 8px 8px 8px 16px;
 	flex-shrink: 0;
 
@@ -176,7 +176,7 @@ CreateGameModal .footer .button
 			flex-grow: 1;
 			color: #fff;
 			background-color: #343a4933;
-		border-radius: 10px;
+		    border-radius: 10px;
 			padding: 4px 16px;
 
 			&:hover
@@ -184,6 +184,11 @@ CreateGameModal .footer .button
 				color: #fff;
 			}
 		}
+
+        > MapSelector
+        {
+            height: 150px;
+        }
 	}
 }
 

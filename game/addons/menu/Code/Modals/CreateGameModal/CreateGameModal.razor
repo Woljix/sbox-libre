@@ -76,7 +76,7 @@
 						<div class="row">
                             <div class="is-label">Map</div>
                             <div class="control">
-								<Button class="clicky" icon="map" onclick=@SelectMap>@(MapPackage?.Title ?? "Select Map")</Button>
+                                <MapSelector MapPackage=@MapPackage OnValueChanged =@OnMapSelected />
                             </div>
                         </div>
                     }
@@ -100,7 +100,7 @@
                             {
                                 @if ( e.Max is not null ) 
                                 {
-                                    <SliderControl Value=@(Output.GameSettings[e.Name].ToFloat()) OnValueChanged=@((float x) => { Output.GameSettings[e.Name] = x.ToString(); }) class="glass with-grow" Min="@(e.Min ?? 0)" Max="@(e.Max ?? 100)" Step="@(e.Step ?? 1)" @ShowTextEntry="@true" />
+                                    <SliderControl Value=@(Output.GameSettings[e.Name].ToFloat()) OnValueChanged=@((float x) => { Output.GameSettings[e.Name] = x.ToString(); }) class="glass with-grow" Min="@(e.Min ?? 0)" Max="@(e.Max ?? 100)" Step="@(e.Step ?? 1)" ShowTextEntry="@true" />
                                 }
                                 else
                                 {
@@ -256,16 +256,10 @@
         return string.Equals( launchMode, "launcher", StringComparison.OrdinalIgnoreCase );
     }
 
-    void SelectMap()
+    void OnMapSelected( Package pkg )
     {
-        var mapTarget = Package.GetValue( "MapTarget", Package.FullIdent );
-
-        Game.Overlay.ShowPackageSelector( $"type:map sort:popular target:{mapTarget}", (pkg) =>
-        {
-            MapPackage = pkg;
-            Output = Output with { MapIdent = pkg.FullIdent };
-            StateHasChanged();
-        } );
+        Output = Output with { MapIdent = pkg.FullIdent };
+        StateHasChanged();
     }
 
     private string GetGroupName( string group )
